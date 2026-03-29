@@ -61,7 +61,7 @@ The design principle behind every control here is simple. Each layer assumes the
 
 Blocks RMM installers from running when delivered via browser, email, or Office macros. During configuration, two rules were Off by default and one was on Audit. All were reviewed and hardened to Block before deployment. Default configurations are not sufficient for this threat.
 
-<img width="1848" height="1230" alt="image" src="https://github.com/user-attachments/assets/f8aac156-9dab-4444-8f88-84ec3a5e3141" />
+<img width="1400" height="900" alt="image" src="https://github.com/user-attachments/assets/f8aac156-9dab-4444-8f88-84ec3a5e3141" />
 
 ---
 
@@ -75,7 +75,7 @@ Cloud Block Level is set to High because an RMM tool repackaged by an attacker t
 
 Disable Local Admin Merge is enabled because without it, an attacker with local admin can simply override this policy locally. That one setting is what makes the entire policy enforceable.
 
-<img width="1808" height="1236" alt="image" src="https://github.com/user-attachments/assets/416e0f41-b554-4295-8960-f56ee16f5c68" />
+<img width="800" height="1100" alt="image" src="https://github.com/user-attachments/assets/416e0f41-b554-4295-8960-f56ee16f5c68" />
 
 ---
 
@@ -105,7 +105,7 @@ The built-in Administrator account is disabled via Intune. Combined with LAPS, e
 
 One thing worth noting here. During review, the policy was initially configured to Enable the Administrator account instead of Disable. Caught before deployment and corrected. A misconfiguration like that would have actively increased attack surface rather than reducing it. Configuration review matters as much as configuration deployment.
 
-<img width="1096" height="868" alt="image" src="https://github.com/user-attachments/assets/125b3488-4b19-48c9-87b6-b60230fb9432" />
+<img width="800" height="868" alt="image" src="https://github.com/user-attachments/assets/125b3488-4b19-48c9-87b6-b60230fb9432" />
 
 ---
 

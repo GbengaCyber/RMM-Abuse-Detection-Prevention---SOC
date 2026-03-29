@@ -57,15 +57,15 @@ No detection rules means the RMM tool runs quietly for days. No one is looking f
 The design principle behind every control here is simple. Each layer assumes the one above it already failed. If phishing controls miss the email, ASR rules stop the installer. If ASR misses the binary, PUA protection catches the known RMM tool. If PUA misses it, the KQL detection rule fires on the network connection. If the attacker gets in and tries to disable Defender, tamper protection blocks the command. Each layer is built expecting the previous one to be bypassed.
 
 ---
-### Layer 1 — ASR Rules
+### Layer 1 | ASR Rules
 
 Blocks RMM installers from running when delivered via browser, email, or Office macros. During configuration, two rules were Off by default and one was on Audit. All were reviewed and hardened to Block before deployment. Default configurations are not sufficient for this threat.
 
 <img width="1848" height="1230" alt="image" src="https://github.com/user-attachments/assets/f8aac156-9dab-4444-8f88-84ec3a5e3141" />
+
 ---
 
-
-### Layer 2 — Defender AV Policy
+### Layer 2 | Defender AV Policy
 
 Enforces consistent AV configuration across every managed endpoint via Intune. Without a managed policy, each device runs whatever configuration it shipped with or whatever a local admin last changed. Attackers specifically look for endpoints with degraded AV.
 
@@ -79,7 +79,7 @@ Disable Local Admin Merge is enabled because without it, an attacker with local 
 
 ---
 
-### Layer 3 — Tamper Protection
+### Layer 3 | Tamper Protection
 
 Prevents anyone, including local admins, from disabling or modifying Defender via PowerShell or registry edits. Akira ransomware and most human-operated ransomware groups attempt to kill AV and EDR before encrypting. With tamper protection on, that command fails even with SYSTEM privileges. The attacker cannot blind your defences before they strike.
 
@@ -89,7 +89,7 @@ Prevents anyone, including local admins, from disabling or modifying Defender vi
 
 
 
-### Layer 4 — EDR in Block Mode
+### Layer 4 | EDR in Block Mode
 
 Tells MDE to actively remediate threats it detects, even when it is not the primary AV. Many organisations run a third-party AV alongside MDE. If the third-party AV misses a renamed or repackaged RMM binary, MDE detects the behaviour but without EDR in block mode it only alerts. It does not act. EDR in block mode closes that gap. Detection and remediation happen automatically, no analyst intervention required.
 
@@ -99,7 +99,7 @@ Tells MDE to actively remediate threats it detects, even when it is not the prim
 
 
 
-### Layer 5 — Local Admin Restriction
+### Layer 5 | Local Admin Restriction
 
 The built-in Administrator account is disabled via Intune. Combined with LAPS, every device has a unique rotating local admin password managed centrally. Compromising one machine does not hand over the rest of the estate.
 
@@ -207,21 +207,21 @@ Before the simulation, the query returned zero results. Clean environment, nothi
 
 To simulate the attack, I connected from the VM to multiple RMM domains via PowerShell, mimicking the outbound beacon behaviour an attacker's RMM session would generate. Then downloaded and installed AnyDesk from the browser, simulating the full phishing delivery chain.
 
-<img width="1500" height="1000" alt="image" src="https://github.com/user-attachments/assets/71d08bd0-70a3-4cdc-84db-232b07481c82" />
+<img width="1200" height="700" alt="image" src="https://github.com/user-attachments/assets/71d08bd0-70a3-4cdc-84db-232b07481c82" />
 
 ---
 
 Anydesk Downloaded and running successfully on VM
 
 
-<img width="835" height="322" alt="image" src="https://github.com/user-attachments/assets/06c041b5-62d9-4f8d-97b3-398e00243607" />
+<img width="700" height="322" alt="image" src="https://github.com/user-attachments/assets/06c041b5-62d9-4f8d-97b3-398e00243607" />
 
 ---
 
 
 The consolidated query returned 14 hits. Connections to ninjarmm.com, anydesk.com, and teamviewer.com from powershell.exe. Connections to AnyDesk relay servers from msedge.exe during the download. Connections from the AnyDesk binary itself phoning home after installation. Device: soclab. User: labuser1.
 
-<img width="1500" height="900" alt="image" src="https://github.com/user-attachments/assets/fb3b4028-aead-4427-ae5f-7785d3f4ca97" />
+<img width="1300" height="700" alt="image" src="https://github.com/user-attachments/assets/fb3b4028-aead-4427-ae5f-7785d3f4ca97" />
 
 --
 
@@ -229,7 +229,7 @@ The consolidated query returned 14 hits. Connections to ninjarmm.com, anydesk.co
 A separate file event query confirmed AnyDesk.exe written to C:\Program Files (x86) at 5:23am, captured at the file system level independent of network telemetry.
 
 
-<img width="2150" height="914" alt="image" src="https://github.com/user-attachments/assets/88293a2a-4ed2-47c0-906d-daa8f9b98c0e" />
+<img width="1600" height="700" alt="image" src="https://github.com/user-attachments/assets/88293a2a-4ed2-47c0-906d-daa8f9b98c0e" />
 
 --
 
@@ -241,11 +241,6 @@ The Sentinel scheduled analytics rule fired within the hour and created a High s
 
 ---
 
-The lab VM was then isolated via MDE to complete the response simulation.
-
-**[SCREENSHOT — MDE device isolation — soclab]**
-
----
 
 ## Sentinel Analytics Rule
 
@@ -255,7 +250,7 @@ Detection is not dependent on someone remembering to run a hunt. An attacker who
 
 Rule: High severity. Runs every 1 hour. MITRE tactics mapped across Initial Access, Execution, Persistence, Defence Evasion, Lateral Movement, Exfiltration, and Impact.
 
-<img width="1000" height="523" alt="Pasted Graphic 3" src="https://github.com/user-attachments/assets/844f0ce3-2f91-490e-904e-00f0a3358d21" />
+<img width="780" height="480" alt="Pasted Graphic 3" src="https://github.com/user-attachments/assets/844f0ce3-2f91-490e-904e-00f0a3358d21" />
 
 ---
 

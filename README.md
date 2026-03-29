@@ -207,7 +207,7 @@ Before the simulation, the query returned zero results. Clean environment, nothi
 
 To simulate the attack, I connected from the VM to multiple RMM domains via PowerShell, mimicking the outbound beacon behaviour an attacker's RMM session would generate. Then downloaded and installed AnyDesk from the browser, simulating the full phishing delivery chain.
 
-<img width="1200" height="700" alt="image" src="https://github.com/user-attachments/assets/71d08bd0-70a3-4cdc-84db-232b07481c82" />
+<img width="1100" height="700" alt="image" src="https://github.com/user-attachments/assets/71d08bd0-70a3-4cdc-84db-232b07481c82" />
 
 ---
 
@@ -221,7 +221,7 @@ Anydesk Downloaded and running successfully on VM
 
 The consolidated query returned 14 hits. Connections to ninjarmm.com, anydesk.com, and teamviewer.com from powershell.exe. Connections to AnyDesk relay servers from msedge.exe during the download. Connections from the AnyDesk binary itself phoning home after installation. Device: soclab. User: labuser1.
 
-<img width="1300" height="700" alt="image" src="https://github.com/user-attachments/assets/fb3b4028-aead-4427-ae5f-7785d3f4ca97" />
+<img width="1000" height="600" alt="image" src="https://github.com/user-attachments/assets/fb3b4028-aead-4427-ae5f-7785d3f4ca97" />
 
 --
 

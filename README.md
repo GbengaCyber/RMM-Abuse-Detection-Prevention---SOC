@@ -83,14 +83,20 @@ Disable Local Admin Merge is enabled because without it, an attacker with local 
 
 Prevents anyone, including local admins, from disabling or modifying Defender via PowerShell or registry edits. Akira ransomware and most human-operated ransomware groups attempt to kill AV and EDR before encrypting. With tamper protection on, that command fails even with SYSTEM privileges. The attacker cannot blind your defences before they strike.
 
-**[SCREENSHOT — Tamper Protection On]**
+<img width="803" height="279" alt="image" src="https://github.com/user-attachments/assets/d69dac5a-c324-4a4d-b5c4-993dbf2e6838" />
+
+---
+
 
 
 ### Layer 4 — EDR in Block Mode
 
 Tells MDE to actively remediate threats it detects, even when it is not the primary AV. Many organisations run a third-party AV alongside MDE. If the third-party AV misses a renamed or repackaged RMM binary, MDE detects the behaviour but without EDR in block mode it only alerts. It does not act. EDR in block mode closes that gap. Detection and remediation happen automatically, no analyst intervention required.
 
-**[SCREENSHOT — EDR in block mode On]**
+<img width="767" height="179" alt="image" src="https://github.com/user-attachments/assets/830f2099-5d30-4f76-8632-afd9dae721ef" />
+
+---
+
 
 
 ### Layer 5 — Local Admin Restriction
@@ -99,7 +105,10 @@ The built-in Administrator account is disabled via Intune. Combined with LAPS, e
 
 One thing worth noting here. During review, the policy was initially configured to Enable the Administrator account instead of Disable. Caught before deployment and corrected. A misconfiguration like that would have actively increased attack surface rather than reducing it. Configuration review matters as much as configuration deployment.
 
-**[SCREENSHOT — Local admin restriction — Intune profile]**
+<img width="1096" height="868" alt="image" src="https://github.com/user-attachments/assets/125b3488-4b19-48c9-87b6-b60230fb9432" />
+
+---
+
 
 
 ## Detection — KQL Query
@@ -191,30 +200,52 @@ All controls were tested in a controlled Azure lab VM, onboarded to MDE with eve
 
 Before the simulation, the query returned zero results. Clean environment, nothing running.
 
-**[SCREENSHOT — KQL query — 0 results — clean baseline]**
+<img width="741" height="387" alt="Pasted Graphic 4" src="https://github.com/user-attachments/assets/5ede5c95-83fa-43fb-bcc9-e4f4e997efc7" />
+
+---
+
 
 To simulate the attack, I connected from the VM to multiple RMM domains via PowerShell, mimicking the outbound beacon behaviour an attacker's RMM session would generate. Then downloaded and installed AnyDesk from the browser, simulating the full phishing delivery chain.
 
-**[SCREENSHOT — PowerShell — TcpTestSucceeded: True — all four RMM domains]**
+<img width="1500" height="1000" alt="image" src="https://github.com/user-attachments/assets/71d08bd0-70a3-4cdc-84db-232b07481c82" />
 
-**[SCREENSHOT — AnyDesk downloaded and running on the VM]**
+---
+
+Anydesk Downloaded and running successfully on VM
+
+
+<img width="835" height="322" alt="image" src="https://github.com/user-attachments/assets/06c041b5-62d9-4f8d-97b3-398e00243607" />
+
+---
+
 
 The consolidated query returned 14 hits. Connections to ninjarmm.com, anydesk.com, and teamviewer.com from powershell.exe. Connections to AnyDesk relay servers from msedge.exe during the download. Connections from the AnyDesk binary itself phoning home after installation. Device: soclab. User: labuser1.
 
-**[SCREENSHOT — KQL results — 14 items — DetectionType, Evidence, Detail columns]**
+<img width="1500" height="900" alt="image" src="https://github.com/user-attachments/assets/fb3b4028-aead-4427-ae5f-7785d3f4ca97" />
+
+--
+
 
 A separate file event query confirmed AnyDesk.exe written to C:\Program Files (x86) at 5:23am, captured at the file system level independent of network telemetry.
 
-**[SCREENSHOT — DeviceFileEvents — AnyDesk.exe FileCreated — labuser1]**
+
+<img width="2150" height="914" alt="image" src="https://github.com/user-attachments/assets/88293a2a-4ed2-47c0-906d-daa8f9b98c0e" />
+
+--
+
 
 The Sentinel scheduled analytics rule fired within the hour and created a High severity incident automatically, without any manual action.
 
 **[SCREENSHOT — Sentinel incident — High severity]**
 
+
+---
+
 The lab VM was then isolated via MDE to complete the response simulation.
 
 **[SCREENSHOT — MDE device isolation — soclab]**
 
+---
 
 ## Sentinel Analytics Rule
 
@@ -224,8 +255,9 @@ Detection is not dependent on someone remembering to run a hunt. An attacker who
 
 Rule: High severity. Runs every 1 hour. MITRE tactics mapped across Initial Access, Execution, Persistence, Defence Evasion, Lateral Movement, Exfiltration, and Impact.
 
-**[SCREENSHOT — Sentinel analytics rule — Review + create summary]**
+<img width="1000" height="523" alt="Pasted Graphic 3" src="https://github.com/user-attachments/assets/844f0ce3-2f91-490e-904e-00f0a3358d21" />
 
+---
 
 ## Response Playbook
 

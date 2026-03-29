@@ -56,13 +56,13 @@ No detection rules means the RMM tool runs quietly for days. No one is looking f
 
 The design principle behind every control here is simple. Each layer assumes the one above it already failed. If phishing controls miss the email, ASR rules stop the installer. If ASR misses the binary, PUA protection catches the known RMM tool. If PUA misses it, the KQL detection rule fires on the network connection. If the attacker gets in and tries to disable Defender, tamper protection blocks the command. Each layer is built expecting the previous one to be bypassed.
 
-
+---
 ### Layer 1 — ASR Rules
 
 Blocks RMM installers from running when delivered via browser, email, or Office macros. During configuration, two rules were Off by default and one was on Audit. All were reviewed and hardened to Block before deployment. Default configurations are not sufficient for this threat.
 
-**<img width="1848" height="1230" alt="image" src="https://github.com/user-attachments/assets/f8aac156-9dab-4444-8f88-84ec3a5e3141" />
-**
+<img width="1848" height="1230" alt="image" src="https://github.com/user-attachments/assets/f8aac156-9dab-4444-8f88-84ec3a5e3141" />
+---
 
 
 ### Layer 2 — Defender AV Policy
@@ -75,8 +75,9 @@ Cloud Block Level is set to High because an RMM tool repackaged by an attacker t
 
 Disable Local Admin Merge is enabled because without it, an attacker with local admin can simply override this policy locally. That one setting is what makes the entire policy enforceable.
 
-**[SCREENSHOT — Defender AV policy review]**
+<img width="1808" height="1236" alt="image" src="https://github.com/user-attachments/assets/416e0f41-b554-4295-8960-f56ee16f5c68" />
 
+---
 
 ### Layer 3 — Tamper Protection
 

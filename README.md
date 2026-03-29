@@ -61,7 +61,8 @@ The design principle behind every control here is simple. Each layer assumes the
 
 Blocks RMM installers from running when delivered via browser, email, or Office macros. During configuration, two rules were Off by default and one was on Audit. All were reviewed and hardened to Block before deployment. Default configurations are not sufficient for this threat.
 
-**[SCREENSHOT — ASR policy — all rules on Block]**
+**<img width="1848" height="1230" alt="image" src="https://github.com/user-attachments/assets/f8aac156-9dab-4444-8f88-84ec3a5e3141" />
+**
 
 
 ### Layer 2 — Defender AV Policy

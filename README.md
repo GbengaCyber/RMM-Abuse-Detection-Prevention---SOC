@@ -234,14 +234,6 @@ A separate file event query confirmed AnyDesk.exe written to C:\Program Files (x
 --
 
 
-The Sentinel scheduled analytics rule fired within the hour and created a High severity incident automatically, without any manual action.
-
-**[SCREENSHOT — Sentinel incident — High severity]**
-
-
----
-
-
 ## Sentinel Analytics Rule
 
 The KQL query is deployed as a scheduled Sentinel analytics rule running every hour across the last 24 hours of telemetry. Any result triggers a High severity incident assigned directly to the analyst queue.

@@ -61,7 +61,7 @@ The design principle behind every control here is simple. Each layer assumes the
 
 Blocks RMM installers from running when delivered via browser, email, or Office macros. During configuration, two rules were Off by default and one was on Audit. All were reviewed and hardened to Block before deployment. Default configurations are not sufficient for this threat.
 
-<img width="1400" height="900" alt="image" src="https://github.com/user-attachments/assets/f8aac156-9dab-4444-8f88-84ec3a5e3141" />
+<img width="800"  alt="image" src="https://github.com/user-attachments/assets/f8aac156-9dab-4444-8f88-84ec3a5e3141" />
 
 ---
 

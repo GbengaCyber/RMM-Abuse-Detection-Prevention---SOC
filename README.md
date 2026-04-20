@@ -75,6 +75,7 @@ Cloud Block Level is set to High because an RMM tool repackaged by an attacker t
 
 Disable Local Admin Merge is enabled because without it, an attacker with local admin can simply override this policy locally. That one setting is what makes the entire policy enforceable.
 
+---
 <img width="800"  alt="image" src="https://github.com/user-attachments/assets/416e0f41-b554-4295-8960-f56ee16f5c68" />
 
 ---
@@ -83,6 +84,7 @@ Disable Local Admin Merge is enabled because without it, an attacker with local 
 
 Prevents anyone, including local admins, from disabling or modifying Defender via PowerShell or registry edits. Akira ransomware and most human-operated ransomware groups attempt to kill AV and EDR before encrypting. With tamper protection on, that command fails even with SYSTEM privileges. The attacker cannot blind your defences before they strike.
 
+---
 <img width="800"  alt="image" src="https://github.com/user-attachments/assets/d69dac5a-c324-4a4d-b5c4-993dbf2e6838" />
 
 ---
@@ -93,6 +95,7 @@ Prevents anyone, including local admins, from disabling or modifying Defender vi
 
 Tells MDE to actively remediate threats it detects, even when it is not the primary AV. Many organisations run a third-party AV alongside MDE. If the third-party AV misses a renamed or repackaged RMM binary, MDE detects the behaviour but without EDR in block mode it only alerts. It does not act. EDR in block mode closes that gap. Detection and remediation happen automatically, no analyst intervention required.
 
+---
 <img width="800"  alt="image" src="https://github.com/user-attachments/assets/830f2099-5d30-4f76-8632-afd9dae721ef" />
 
 ---
@@ -122,6 +125,8 @@ Signal 1 is behaviour. An RMM process spawned from a suspicious parent process â
 Signal 2 is network. An outbound connection to known RMM infrastructure from a non-approved device. The binary name does not matter if the destination is an AnyDesk relay server.
 
 Signal 3 is prevalence. A known RMM binary appearing on an endpoint for the first time. A binary that has never been seen before, appearing suddenly, is always worth investigating.
+
+---
 
 ```kql
 let RMMProcesses = dynamic([
@@ -181,7 +186,7 @@ union
 )
 | order by Timestamp desc
 ```
-
+---
 File installation detection â€” catches the binary being written to disk independent of process or network telemetry:
 
 ```kql
@@ -192,7 +197,7 @@ DeviceFileEvents
     ActionType, FolderPath, InitiatingProcessFileName
 | order by TimeGenerated asc
 ```
-
+---
 
 ## Live Simulation Results
 
@@ -207,6 +212,7 @@ Before the simulation, the query returned zero results. Clean environment, nothi
 
 To simulate the attack, I connected from the VM to multiple RMM domains via PowerShell, mimicking the outbound beacon behaviour an attacker's RMM session would generate. Then downloaded and installed AnyDesk from the browser, simulating the full phishing delivery chain.
 
+---
 <img width="800"  alt="image" src="https://github.com/user-attachments/assets/71d08bd0-70a3-4cdc-84db-232b07481c82" />
 
 ---
@@ -228,10 +234,10 @@ The consolidated query returned 14 hits. Connections to ninjarmm.com, anydesk.co
 
 A separate file event query confirmed AnyDesk.exe written to C:\Program Files (x86) at 5:23am, captured at the file system level independent of network telemetry.
 
-
+---
 <img width="800"  alt="image" src="https://github.com/user-attachments/assets/88293a2a-4ed2-47c0-906d-daa8f9b98c0e" />
 
---
+---
 
 
 ## Sentinel Analytics Rule
@@ -242,6 +248,7 @@ Detection is not dependent on someone remembering to run a hunt. An attacker who
 
 Rule: High severity. Runs every 1 hour. MITRE tactics mapped across Initial Access, Execution, Persistence, Defence Evasion, Lateral Movement, Exfiltration, and Impact.
 
+---
 <img width="800"  alt="Pasted Graphic 3" src="https://github.com/user-attachments/assets/844f0ce3-2f91-490e-904e-00f0a3358d21" />
 
 ---

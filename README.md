@@ -75,7 +75,7 @@ Cloud Block Level is set to High because an RMM tool repackaged by an attacker t
 
 Disable Local Admin Merge is enabled because without it, an attacker with local admin can simply override this policy locally. That one setting is what makes the entire policy enforceable.
 
-<img width="800" height="1100" alt="image" src="https://github.com/user-attachments/assets/416e0f41-b554-4295-8960-f56ee16f5c68" />
+<img width="800"  alt="image" src="https://github.com/user-attachments/assets/416e0f41-b554-4295-8960-f56ee16f5c68" />
 
 ---
 
@@ -83,7 +83,7 @@ Disable Local Admin Merge is enabled because without it, an attacker with local 
 
 Prevents anyone, including local admins, from disabling or modifying Defender via PowerShell or registry edits. Akira ransomware and most human-operated ransomware groups attempt to kill AV and EDR before encrypting. With tamper protection on, that command fails even with SYSTEM privileges. The attacker cannot blind your defences before they strike.
 
-<img width="803" height="279" alt="image" src="https://github.com/user-attachments/assets/d69dac5a-c324-4a4d-b5c4-993dbf2e6838" />
+<img width="800"  alt="image" src="https://github.com/user-attachments/assets/d69dac5a-c324-4a4d-b5c4-993dbf2e6838" />
 
 ---
 
@@ -93,7 +93,7 @@ Prevents anyone, including local admins, from disabling or modifying Defender vi
 
 Tells MDE to actively remediate threats it detects, even when it is not the primary AV. Many organisations run a third-party AV alongside MDE. If the third-party AV misses a renamed or repackaged RMM binary, MDE detects the behaviour but without EDR in block mode it only alerts. It does not act. EDR in block mode closes that gap. Detection and remediation happen automatically, no analyst intervention required.
 
-<img width="767" height="179" alt="image" src="https://github.com/user-attachments/assets/830f2099-5d30-4f76-8632-afd9dae721ef" />
+<img width="800"  alt="image" src="https://github.com/user-attachments/assets/830f2099-5d30-4f76-8632-afd9dae721ef" />
 
 ---
 
@@ -105,7 +105,7 @@ The built-in Administrator account is disabled via Intune. Combined with LAPS, e
 
 One thing worth noting here. During review, the policy was initially configured to Enable the Administrator account instead of Disable. Caught before deployment and corrected. A misconfiguration like that would have actively increased attack surface rather than reducing it. Configuration review matters as much as configuration deployment.
 
-<img width="800" height="868" alt="image" src="https://github.com/user-attachments/assets/125b3488-4b19-48c9-87b6-b60230fb9432" />
+<img width="800"  alt="image" src="https://github.com/user-attachments/assets/125b3488-4b19-48c9-87b6-b60230fb9432" />
 
 ---
 
@@ -200,28 +200,28 @@ All controls were tested in a controlled Azure lab VM, onboarded to MDE with eve
 
 Before the simulation, the query returned zero results. Clean environment, nothing running.
 
-<img width="741" height="387" alt="Pasted Graphic 4" src="https://github.com/user-attachments/assets/5ede5c95-83fa-43fb-bcc9-e4f4e997efc7" />
+<img width="800"  alt="Pasted Graphic 4" src="https://github.com/user-attachments/assets/5ede5c95-83fa-43fb-bcc9-e4f4e997efc7" />
 
 ---
 
 
 To simulate the attack, I connected from the VM to multiple RMM domains via PowerShell, mimicking the outbound beacon behaviour an attacker's RMM session would generate. Then downloaded and installed AnyDesk from the browser, simulating the full phishing delivery chain.
 
-<img width="1100" height="700" alt="image" src="https://github.com/user-attachments/assets/71d08bd0-70a3-4cdc-84db-232b07481c82" />
+<img width="800"  alt="image" src="https://github.com/user-attachments/assets/71d08bd0-70a3-4cdc-84db-232b07481c82" />
 
 ---
 
 Anydesk Downloaded and running successfully on VM
 
 
-<img width="700" height="322" alt="image" src="https://github.com/user-attachments/assets/06c041b5-62d9-4f8d-97b3-398e00243607" />
+<img width="800"  alt="image" src="https://github.com/user-attachments/assets/06c041b5-62d9-4f8d-97b3-398e00243607" />
 
 ---
 
 
 The consolidated query returned 14 hits. Connections to ninjarmm.com, anydesk.com, and teamviewer.com from powershell.exe. Connections to AnyDesk relay servers from msedge.exe during the download. Connections from the AnyDesk binary itself phoning home after installation. Device: soclab. User: labuser1.
 
-<img width="1000" height="600" alt="image" src="https://github.com/user-attachments/assets/fb3b4028-aead-4427-ae5f-7785d3f4ca97" />
+<img width="800"  alt="image" src="https://github.com/user-attachments/assets/fb3b4028-aead-4427-ae5f-7785d3f4ca97" />
 
 --
 
@@ -229,7 +229,7 @@ The consolidated query returned 14 hits. Connections to ninjarmm.com, anydesk.co
 A separate file event query confirmed AnyDesk.exe written to C:\Program Files (x86) at 5:23am, captured at the file system level independent of network telemetry.
 
 
-<img width="1600" height="700" alt="image" src="https://github.com/user-attachments/assets/88293a2a-4ed2-47c0-906d-daa8f9b98c0e" />
+<img width="800"  alt="image" src="https://github.com/user-attachments/assets/88293a2a-4ed2-47c0-906d-daa8f9b98c0e" />
 
 --
 
@@ -242,7 +242,7 @@ Detection is not dependent on someone remembering to run a hunt. An attacker who
 
 Rule: High severity. Runs every 1 hour. MITRE tactics mapped across Initial Access, Execution, Persistence, Defence Evasion, Lateral Movement, Exfiltration, and Impact.
 
-<img width="780" height="480" alt="Pasted Graphic 3" src="https://github.com/user-attachments/assets/844f0ce3-2f91-490e-904e-00f0a3358d21" />
+<img width="800"  alt="Pasted Graphic 3" src="https://github.com/user-attachments/assets/844f0ce3-2f91-490e-904e-00f0a3358d21" />
 
 ---
 
@@ -254,7 +254,7 @@ Check the DeviceName and AccountName. Has the same user triggered alerts on othe
 
 Isolate the device via MDE immediately. Do not wait for confirmation. Every minute of delay is time the attacker uses to move.
 
-Kill the RMM session and remove the binary. Revoke all active sessions for the affected account in Entra ID. Reset credentials. Check whether any new accounts were created during the session window — attackers frequently create backdoor accounts before deploying ransomware.
+Kill the RMM session and remove the binary. Revoke all active sessions for the affected account in Entra ID. Reset credentials. Check whether any new accounts were created during the session window, attackers frequently create backdoor accounts before deploying ransomware.
 
 Run the domain connection query across all devices. One hit almost always means more. Look for the same RMM domains appearing on other endpoints in the same timeframe.
 

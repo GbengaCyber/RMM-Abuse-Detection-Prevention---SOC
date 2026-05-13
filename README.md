@@ -11,16 +11,26 @@ Akira ransomware used this technique across 250+ confirmed breaches and collecte
 This project documents how I built detection and prevention controls to catch RMM abuse at every stage of the attack, from initial delivery through to containment.
 
 
-## The Attack Chain
+## What This Project Demonstrates
 
-A phishing email arrives. It looks like IT support, a Microsoft alert, or an invoice. The user clicks. A browser downloads an RMM installer and runs it. Within 60 seconds the attacker has a persistent, encrypted remote session on the endpoint.
+This project documents a layered defense architecture built to detect and prevent
+RMM tool abuse, one of the most common techniques used by ransomware groups
+including Akira, which used this method across 250 confirmed breaches and
+collected $42 million in ransoms.
 
-No malware on disk. No signatures to match. EDR stays completely quiet.
+The core problem: RMM tools are signed, trusted, and whitelisted by default.
+EDR generates no alerts because the binary is not malware. Without targeted
+controls, an attacker can establish a persistent encrypted remote session in
+under 60 seconds with nothing firing.
 
-From that session the attacker dumps credentials, moves laterally across the network, locates backups, and stages ransomware. Encryption begins at 2am. The business discovers it at 6am when nothing works and a ransom note is on every screen.
+Six prevention layers are deployed and documented across ASR rules, Defender AV
+policy, tamper protection, EDR in block mode, local admin restriction, and
+Windows Defender Application Control. Detection is built as a multi-signal KQL
+query hunting behaviour, network, and prevalence indicators, deployed as a
+scheduled Sentinel analytics rule. In live simulation the consolidated query
+returned 14 confirmed hits across network and file system telemetry.
 
-With the controls in this project, that chain breaks at step one or two. Without them, you find out at the end.
-
+> **Target roles:** SOC Analyst · Detection Engineer · Security Engineer
 
 ## What Goes Wrong Without Controls
 
@@ -35,6 +45,11 @@ No EDR in block mode means MDE detects suspicious behaviour but only creates an 
 No local admin restriction means one recovered credential works on every machine in the estate. An attacker who compromises one endpoint via the RMM session can authenticate to every other device with the same password. Lateral movement takes minutes.
 
 No detection rules means the RMM tool runs quietly for days. No one is looking for it. The SOC finds out when the ransom note appears.
+
+No application control means a renamed or repackaged RMM binary executes freely
+regardless of whether ASR and PUA protection missed it. Without WDAC enforcing
+an allowlist at kernel level, an unsigned executable from a user-writable path
+runs before any behavioural detection has a chance to fire.
 
 
 ## MITRE ATT&CK Mapping

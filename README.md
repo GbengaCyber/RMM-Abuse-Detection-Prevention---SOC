@@ -108,7 +108,54 @@ The built-in Administrator account is disabled via Intune. Combined with LAPS, e
 
 One thing worth noting here. During review, the policy was initially configured to Enable the Administrator account instead of Disable. Caught before deployment and corrected. A misconfiguration like that would have actively increased attack surface rather than reducing it. Configuration review matters as much as configuration deployment.
 
+---
 <img width="800"  alt="image" src="https://github.com/user-attachments/assets/125b3488-4b19-48c9-87b6-b60230fb9432" />
+
+---
+
+### Layer 6 — Windows Defender Application Control and App Control for Business
+
+WDAC operates at kernel level and blocks unsigned or untrusted executables before a process is ever created. Unlike ASR rules which target specific behaviours, WDAC enforces an allowlist model — if the binary is not explicitly trusted, it does not run. This is the strongest execution prevention control in the stack and the last line of defence if every other layer is bypassed.
+
+Two complementary policies are deployed.
+
+---
+
+**App Control for Business — Intune endpoint security policy**
+
+Policy creation type is set to Built-in controls. Audit mode is disabled, meaning the policy is in full enforcement and not simply logging. Trust apps from managed installer is enabled, so software deployed via Intune is automatically trusted without manual signing. Trust apps with good reputation is enabled, allowing Microsoft-verified applications through without creating operational friction.
+
+The result is a policy that blocks unknown and unsigned binaries — including renamed or repackaged RMM tools — while remaining manageable in a corporate environment.
+
+---
+
+<img width="800"  alt="image" src="https://github.com/user-attachments/assets/1d847efc-49a0-43cb-830a-2c8bef8fd0f8" />
+
+
+---
+
+**Block App Execution — Intune assignment**
+
+The Block App Execution profile is assigned to the device group with status Active, confirming the policy reached the endpoint and is enforced. The profile targets Windows 10 and later under Endpoint Security — Attack Surface Reduction.
+
+---
+
+<img width="800"  alt="image" src="https://github.com/user-attachments/assets/9e36d4e2-5629-4274-86b4-53b8a56f037e" />
+
+
+---
+
+**Microsoft Defender Application Control — device configuration profile**
+
+A separate device configuration profile enforces AppLocker application control set to Enforce Components, Store Apps, and Smartlocker. SmartScreen is turned on and users are blocked from bypassing SmartScreen warnings, closing the gap where a user might click through a browser warning to run an unrecognised executable.
+
+---
+
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/edc71187-6b6d-4d41-9b31-ca06725fcfdb" />
+
+---
+
+Together these policies ensure that an RMM binary delivered via phishing and executed from a user-writable path such as Downloads or Desktop cannot run, regardless of whether it is named AnyDesk.exe or disguised as a Windows system process. A renamed binary with no valid signature, no managed installer origin, and no established reputation is blocked at kernel level before the process starts.
 
 ---
 
